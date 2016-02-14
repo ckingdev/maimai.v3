@@ -23,7 +23,7 @@ func main() {
 	}
 	ctx := scope.New()
 	ctx.Set("logger", logger)
-	b := bot.NewBot(ctx, []proto.Handler{&handlers.PingHandler{}}, connection.NewWSDialer(ctx.Fork(), fmt.Sprintf(url, "test")))
+	b := bot.NewBot(ctx, []proto.Handler{&handlers.PingHandler{}, &handlers.PongHandler{}}, connection.NewWSDialer(ctx.Fork(), fmt.Sprintf(url, "test")))
 	if err := b.Run(); err != nil {
 		logger.Fatalf("Bot.Run: Fatal error (%s)", err)
 	}

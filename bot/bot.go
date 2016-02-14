@@ -7,6 +7,7 @@ import (
 	"github.com/apex/log"
 )
 
+// Bot represents a connection to a euphoria room. It may be a mock room.
 type Bot struct {
 	dialer   proto.Dialer
 	conn     proto.Connection
@@ -14,6 +15,7 @@ type Bot struct {
 	ctx      scope.Context
 }
 
+// NewBot creates a new Bot with the given context, handlers, and dialer.
 func NewBot(ctx scope.Context, handlers []proto.Handler, dialer proto.Dialer) *Bot {
 	return &Bot{
 		dialer:   dialer,
@@ -23,6 +25,8 @@ func NewBot(ctx scope.Context, handlers []proto.Handler, dialer proto.Dialer) *B
 	}
 }
 
+// Run dials the room, starts the handlers, and starts listening for incoming
+// packets.
 func (b *Bot) Run() error {
 	logger := b.ctx.Get("logger").(*log.Logger)
 	conn, err := b.dialer.Dial()

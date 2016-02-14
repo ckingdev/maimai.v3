@@ -10,12 +10,17 @@ import (
 	"euphoria.io/scope"
 )
 
+// PongHandler responds to "!ping" or "!ping @MaiMai" with "pong!" as a direct
+// reply.
 type PongHandler struct{}
 
+// Run is a no-op, PongHandler does not need to run in the background.
 func (h *PongHandler) Run(ctx scope.Context) error {
 	return nil
 }
 
+// HandleIncoming responds to messages that equal "!ping" or "!ping @MaiMai"
+// with a "pong!" message over the Connection.
 func (h *PongHandler) HandleIncoming(conn mproto.Connection, p *proto.Packet) error {
 	if p.Type != proto.SendEventType {
 		return nil

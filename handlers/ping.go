@@ -10,17 +10,15 @@ import (
 	"euphoria.io/scope"
 )
 
-//type Handler interface {
-//	Run(ctx scope.Context) error
-//	HandleIncoming(conn Connection, p *proto.Packet) error
-//}
-
+// PingHandler responds to incoming ping-events with the proper ping-reply.
 type PingHandler struct{}
 
+// Run is a no-op, the PingHandler does not need to run in the background.
 func (h *PingHandler) Run(ctx scope.Context) error {
 	return nil
 }
 
+// HandleIncoming responds to the given ping-event over the given Connection.
 func (h *PingHandler) HandleIncoming(conn mproto.Connection, p *proto.Packet) error {
 	if p.Type != proto.PingEventType {
 		return nil
